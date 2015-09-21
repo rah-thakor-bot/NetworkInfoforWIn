@@ -1,0 +1,9 @@
+D:\Rahul Data\Personal\Practice Projects\HackerRank\NetworkInfo\NetworkInfo\bin\Debug\NetworkInfo.exe.config
+D:\Rahul Data\Personal\Practice Projects\HackerRank\NetworkInfo\NetworkInfo\bin\Debug\NetworkInfo.exe
+D:\Rahul Data\Personal\Practice Projects\HackerRank\NetworkInfo\NetworkInfo\bin\Debug\NetworkInfo.pdb
+D:\Rahul Data\Personal\Practice Projects\HackerRank\NetworkInfo\NetworkInfo\obj\Debug\NetworkInfo.csprojResolveAssemblyReference.cache
+D:\Rahul Data\Personal\Practice Projects\HackerRank\NetworkInfo\NetworkInfo\obj\Debug\NetworkInfo.Properties.Resources.resources
+D:\Rahul Data\Personal\Practice Projects\HackerRank\NetworkInfo\NetworkInfo\obj\Debug\NetworkInfo.csproj.GenerateResource.Cache
+D:\Rahul Data\Personal\Practice Projects\HackerRank\NetworkInfo\NetworkInfo\obj\Debug\NetworkInfo.exe
+D:\Rahul Data\Personal\Practice Projects\HackerRank\NetworkInfo\NetworkInfo\obj\Debug\NetworkInfo.pdb
+D:\Rahul Data\Personal\Practice Projects\HackerRank\NetworkInfo\NetworkInfo\obj\Debug\NetworkInfo.NetworkInfoOnWin.resources
