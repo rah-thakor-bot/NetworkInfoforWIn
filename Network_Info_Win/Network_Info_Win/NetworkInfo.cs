@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Windows;
 using System.Windows.Forms;
 using System.Management;
 using libExtension;
 using System.Data;
+using System.DirectoryServices.ActiveDirectory;
 
 
 namespace Network_Info_Win
@@ -12,6 +12,10 @@ namespace Network_Info_Win
     {
         MachineBase Machine;
         DataTable BasicInfo, HardwareInfo, ProgramInstalled;
+        ConnectionOptions conOptn;
+        ManagementScope scope;
+        bool domainChanged = false;
+        bool steppedOutFromRecursion = false;
 
         public NetworkInfo()
         {
@@ -22,16 +26,11 @@ namespace Network_Info_Win
         {
             try
             {
-                Ensure.ArgumentNotNullOrEmptyString(txtUsername.Text, "UserName");
-                Ensure.ArgumentNotNullOrEmptyString(txtPwd.Text, "Password");
-                Ensure.ArgumentNotNullOrEmptyString(txtDomain.Text, "Domain");
                 Ensure.ArgumentNotNullOrEmptyString(txtIP.Text, "IP Address");
                 Machine = new MachineBase();
-                Machine.Username = txtUsername.Text;
-                Machine.Password = txtPwd.Text;
+                //getDomainList();
                 Machine.IP = txtIP.Text;
                 ConnectRemoteMachine();
-
             }
             catch (Exception ex)
             {
@@ -40,20 +39,80 @@ namespace Network_Info_Win
             
         }
 
+        private void getDomainList()
+        {
+            using (var forest = Forest.GetCurrentForest())
+            {
+                int cnt = 0;
+                foreach (Domain domain in forest.Domains)
+                {
+                    //Machine.DomainList[cnt] = domain.Name;
+                    cnt++;
+                    //domain.Dispose();
+                }
+            }
+        }
         private void ConnectRemoteMachine()
         {
             try
             {
-                ConnectionOptions conOptn = new ConnectionOptions(string.Empty, Machine.Username, Machine.Password, string.Empty, ImpersonationLevel.Impersonate, AuthenticationLevel.Default, true, null,new TimeSpan(10000));
-                ManagementScope scope = new ManagementScope(string.Format("\\\\{0}\\root\\cimv2", Machine.IP), conOptn);
-                scope.Connect();
-                GetRemoteSystemInfo(scope);
-                updateBehaviour("SHOW");
+                ErrorCode result = ErrorCode.Error;
+                int numOfDomain = Machine.DomainList.Length;
+                int cnt = 0;
+                foreach (string domain in Machine.DomainList)
+                {
+                    cnt++;
+                    Machine.DomainName = domain;
+                    result = Connect(GetConnectionOptions(Machine.DomainName), Machine.IP);
+                    if(result == ErrorCode.Ok)
+                    {
+                        break;
+                    }
+                    if (result != ErrorCode.RecursionNeeded)
+                        break;
+                    if (result == ErrorCode.RecursionNeeded)
+                    {
+                        if (cnt <= numOfDomain)
+                        {
+                            DialogResult diaRes = MessageBox.Show("Would you like to check system with another credential ? ", "Confirmation", MessageBoxButtons.YesNo);
+                            if (diaRes == DialogResult.Yes)
+                            {
+
+                                continue;
+                            }
+                            else if (diaRes == DialogResult.No)
+                            {
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Can't connect to host with existing domain list. \nNo more interation left with domain list.\n");
+                        }
+                    }
+                }
+                if (result == ErrorCode.Ok)
+                {
+                    GetRemoteSystemInfo(scope);
+                    updateBehaviour("SHOW");
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message.ToString());
             }
+        }
+        private ConnectionOptions GetConnectionOptions(string domain)
+        {
+            conOptn = new ConnectionOptions();
+            conOptn.Username = Machine.Username;
+            conOptn.Password = Machine.Password;
+            return conOptn;
+        }
+        private ErrorCode Connect(ConnectionOptions credential, string ip)
+        {
+
+            return ErrorCode.Ok;
         }
 
         private void GetRemoteSystemInfo(ManagementScope wmScope)
@@ -149,9 +208,6 @@ namespace Network_Info_Win
 
                     break;
                 case "RESET":
-                    txtUsername.Text = string.Empty;
-                    txtPwd.Text = string.Empty;
-                    txtDomain.Text = string.Empty;
                     txtIP.Text = string.Empty;
                     if (BasicInfo.Rows.Count > 0)
                         BasicInfo.Rows.Clear();
