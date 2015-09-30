@@ -32,7 +32,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.lblIP = new System.Windows.Forms.Label();
             this.txtIP = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_Reset = new System.Windows.Forms.Button();
             this.btnGetData = new System.Windows.Forms.Button();
             this.txtDomain = new System.Windows.Forms.TextBox();
             this.txtPwd = new System.Windows.Forms.TextBox();
@@ -91,7 +91,7 @@
             // 
             this.splitContainer1.Panel1.Controls.Add(this.lblIP);
             this.splitContainer1.Panel1.Controls.Add(this.txtIP);
-            this.splitContainer1.Panel1.Controls.Add(this.button1);
+            this.splitContainer1.Panel1.Controls.Add(this.btn_Reset);
             this.splitContainer1.Panel1.Controls.Add(this.btnGetData);
             this.splitContainer1.Panel1.Controls.Add(this.txtDomain);
             this.splitContainer1.Panel1.Controls.Add(this.txtPwd);
@@ -104,13 +104,13 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Size = new System.Drawing.Size(836, 713);
-            this.splitContainer1.SplitterDistance = 123;
+            this.splitContainer1.SplitterDistance = 156;
             this.splitContainer1.TabIndex = 0;
             // 
             // lblIP
             // 
             this.lblIP.AutoSize = true;
-            this.lblIP.Location = new System.Drawing.Point(356, 18);
+            this.lblIP.Location = new System.Drawing.Point(31, 94);
             this.lblIP.Name = "lblIP";
             this.lblIP.Size = new System.Drawing.Size(58, 13);
             this.lblIP.TabIndex = 9;
@@ -118,23 +118,24 @@
             // 
             // txtIP
             // 
-            this.txtIP.Location = new System.Drawing.Point(436, 19);
+            this.txtIP.Location = new System.Drawing.Point(127, 88);
             this.txtIP.Name = "txtIP";
-            this.txtIP.Size = new System.Drawing.Size(159, 20);
+            this.txtIP.Size = new System.Drawing.Size(192, 20);
             this.txtIP.TabIndex = 8;
             // 
-            // button1
+            // btn_Reset
             // 
-            this.button1.Location = new System.Drawing.Point(185, 92);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "Reset";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btn_Reset.Location = new System.Drawing.Point(186, 119);
+            this.btn_Reset.Name = "btn_Reset";
+            this.btn_Reset.Size = new System.Drawing.Size(75, 23);
+            this.btn_Reset.TabIndex = 7;
+            this.btn_Reset.Text = "Reset";
+            this.btn_Reset.UseVisualStyleBackColor = true;
+            this.btn_Reset.Click += new System.EventHandler(this.btn_Reset_Click);
             // 
             // btnGetData
             // 
-            this.btnGetData.Location = new System.Drawing.Point(94, 92);
+            this.btnGetData.Location = new System.Drawing.Point(95, 119);
             this.btnGetData.Name = "btnGetData";
             this.btnGetData.Size = new System.Drawing.Size(75, 23);
             this.btnGetData.TabIndex = 6;
@@ -144,14 +145,14 @@
             // 
             // txtDomain
             // 
-            this.txtDomain.Location = new System.Drawing.Point(94, 65);
+            this.txtDomain.Location = new System.Drawing.Point(127, 61);
             this.txtDomain.Name = "txtDomain";
             this.txtDomain.Size = new System.Drawing.Size(192, 20);
             this.txtDomain.TabIndex = 5;
             // 
             // txtPwd
             // 
-            this.txtPwd.Location = new System.Drawing.Point(94, 39);
+            this.txtPwd.Location = new System.Drawing.Point(127, 35);
             this.txtPwd.Name = "txtPwd";
             this.txtPwd.PasswordChar = '*';
             this.txtPwd.Size = new System.Drawing.Size(192, 20);
@@ -159,7 +160,7 @@
             // 
             // txtUsername
             // 
-            this.txtUsername.Location = new System.Drawing.Point(94, 16);
+            this.txtUsername.Location = new System.Drawing.Point(127, 12);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(192, 20);
             this.txtUsername.TabIndex = 3;
@@ -167,7 +168,7 @@
             // lblWorkGroup
             // 
             this.lblWorkGroup.AutoSize = true;
-            this.lblWorkGroup.Location = new System.Drawing.Point(31, 65);
+            this.lblWorkGroup.Location = new System.Drawing.Point(31, 61);
             this.lblWorkGroup.Name = "lblWorkGroup";
             this.lblWorkGroup.Size = new System.Drawing.Size(43, 13);
             this.lblWorkGroup.TabIndex = 2;
@@ -176,7 +177,7 @@
             // lblPassword
             // 
             this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(31, 42);
+            this.lblPassword.Location = new System.Drawing.Point(31, 38);
             this.lblPassword.Name = "lblPassword";
             this.lblPassword.Size = new System.Drawing.Size(53, 13);
             this.lblPassword.TabIndex = 1;
@@ -185,7 +186,7 @@
             // lblUsername
             // 
             this.lblUsername.AutoSize = true;
-            this.lblUsername.Location = new System.Drawing.Point(31, 19);
+            this.lblUsername.Location = new System.Drawing.Point(31, 15);
             this.lblUsername.Name = "lblUsername";
             this.lblUsername.Size = new System.Drawing.Size(55, 13);
             this.lblUsername.TabIndex = 0;
@@ -204,8 +205,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.grpPrograms);
-            this.splitContainer2.Size = new System.Drawing.Size(836, 586);
-            this.splitContainer2.SplitterDistance = 278;
+            this.splitContainer2.Size = new System.Drawing.Size(836, 553);
+            this.splitContainer2.SplitterDistance = 478;
             this.splitContainer2.TabIndex = 0;
             // 
             // splitContainer3
@@ -222,8 +223,8 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.grpProcessor);
-            this.splitContainer3.Size = new System.Drawing.Size(278, 586);
-            this.splitContainer3.SplitterDistance = 273;
+            this.splitContainer3.Size = new System.Drawing.Size(478, 553);
+            this.splitContainer3.SplitterDistance = 257;
             this.splitContainer3.TabIndex = 0;
             // 
             // grpCredential
@@ -232,7 +233,7 @@
             this.grpCredential.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grpCredential.Location = new System.Drawing.Point(0, 0);
             this.grpCredential.Name = "grpCredential";
-            this.grpCredential.Size = new System.Drawing.Size(278, 273);
+            this.grpCredential.Size = new System.Drawing.Size(478, 257);
             this.grpCredential.TabIndex = 1;
             this.grpCredential.TabStop = false;
             this.grpCredential.Text = "Basic information";
@@ -243,7 +244,10 @@
             this.grdBasicInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdBasicInfo.Location = new System.Drawing.Point(3, 16);
             this.grdBasicInfo.Name = "grdBasicInfo";
-            this.grdBasicInfo.Size = new System.Drawing.Size(272, 254);
+            this.grdBasicInfo.RowHeadersVisible = false;
+            this.grdBasicInfo.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.grdBasicInfo.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.grdBasicInfo.Size = new System.Drawing.Size(472, 238);
             this.grdBasicInfo.TabIndex = 0;
             // 
             // grpProcessor
@@ -252,7 +256,7 @@
             this.grpProcessor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grpProcessor.Location = new System.Drawing.Point(0, 0);
             this.grpProcessor.Name = "grpProcessor";
-            this.grpProcessor.Size = new System.Drawing.Size(278, 309);
+            this.grpProcessor.Size = new System.Drawing.Size(478, 292);
             this.grpProcessor.TabIndex = 1;
             this.grpProcessor.TabStop = false;
             this.grpProcessor.Text = "Hardware information";
@@ -263,7 +267,9 @@
             this.grdHardware.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdHardware.Location = new System.Drawing.Point(3, 16);
             this.grdHardware.Name = "grdHardware";
-            this.grdHardware.Size = new System.Drawing.Size(272, 290);
+            this.grdHardware.RowHeadersVisible = false;
+            this.grdHardware.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.grdHardware.Size = new System.Drawing.Size(472, 273);
             this.grdHardware.TabIndex = 0;
             // 
             // grpPrograms
@@ -272,7 +278,7 @@
             this.grpPrograms.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grpPrograms.Location = new System.Drawing.Point(0, 0);
             this.grpPrograms.Name = "grpPrograms";
-            this.grpPrograms.Size = new System.Drawing.Size(554, 586);
+            this.grpPrograms.Size = new System.Drawing.Size(354, 553);
             this.grpPrograms.TabIndex = 0;
             this.grpPrograms.TabStop = false;
             this.grpPrograms.Text = "Programs installed";
@@ -283,7 +289,10 @@
             this.grdPrograms.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdPrograms.Location = new System.Drawing.Point(3, 16);
             this.grdPrograms.Name = "grdPrograms";
-            this.grdPrograms.Size = new System.Drawing.Size(548, 567);
+            this.grdPrograms.RowHeadersVisible = false;
+            this.grdPrograms.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.grdPrograms.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.grdPrograms.Size = new System.Drawing.Size(348, 534);
             this.grdPrograms.TabIndex = 0;
             // 
             // NetworkInfo
@@ -293,7 +302,9 @@
             this.ClientSize = new System.Drawing.Size(842, 732);
             this.Controls.Add(this.grpNetworkInfo);
             this.Name = "NetworkInfo";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Network Information";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.grpNetworkInfo.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
@@ -331,7 +342,7 @@
         private System.Windows.Forms.Button btnGetData;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.SplitContainer splitContainer3;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_Reset;
         private System.Windows.Forms.Label lblIP;
         private System.Windows.Forms.TextBox txtIP;
         private System.Windows.Forms.DataGridView grdBasicInfo;
