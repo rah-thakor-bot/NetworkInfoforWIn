@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Management;
 using libExtension;
 using System.Data;
-using System.DirectoryServices.ActiveDirectory;
-
+using System.Management;
 
 namespace Network_Info_Win
 {
@@ -12,11 +10,7 @@ namespace Network_Info_Win
     {
         MachineBase Machine;
         DataTable BasicInfo, HardwareInfo, ProgramInstalled;
-        ConnectionOptions conOptn;
-        ManagementScope scope;
-        bool domainChanged = false;
-        bool steppedOutFromRecursion = false;
-
+        
         public NetworkInfo()
         {
             InitializeComponent();
@@ -30,98 +24,25 @@ namespace Network_Info_Win
                 Machine = new MachineBase();
                 //getDomainList();
                 Machine.IP = txtIP.Text;
-                ConnectRemoteMachine();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message.ToString());
-            }
-            
-        }
-
-        private void getDomainList()
-        {
-            using (var forest = Forest.GetCurrentForest())
-            {
-                int cnt = 0;
-                foreach (Domain domain in forest.Domains)
-                {
-                    //Machine.DomainList[cnt] = domain.Name;
-                    cnt++;
-                    //domain.Dispose();
-                }
-            }
-        }
-        private void ConnectRemoteMachine()
-        {
-            try
-            {
-                ErrorCode result = ErrorCode.Error;
-                int numOfDomain = Machine.DomainList.Length;
-                int cnt = 0;
-                foreach (string domain in Machine.DomainList)
-                {
-                    cnt++;
-                    Machine.DomainName = domain;
-                    result = Connect(GetConnectionOptions(Machine.DomainName), Machine.IP);
-                    if(result == ErrorCode.Ok)
-                    {
-                        break;
-                    }
-                    if (result != ErrorCode.RecursionNeeded)
-                        break;
-                    if (result == ErrorCode.RecursionNeeded)
-                    {
-                        if (cnt <= numOfDomain)
-                        {
-                            DialogResult diaRes = MessageBox.Show("Would you like to check system with another credential ? ", "Confirmation", MessageBoxButtons.YesNo);
-                            if (diaRes == DialogResult.Yes)
-                            {
-
-                                continue;
-                            }
-                            else if (diaRes == DialogResult.No)
-                            {
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("Can't connect to host with existing domain list. \nNo more interation left with domain list.\n");
-                        }
-                    }
-                }
+                ErrorCode result = Machine.ConnectRemoteMachine();
                 if (result == ErrorCode.Ok)
                 {
-                    GetRemoteSystemInfo(scope);
+                    GetRemoteSystemInfo(Machine.scope);
                     updateBehaviour("SHOW");
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message.ToString());
-            }
-        }
-        private ConnectionOptions GetConnectionOptions(string domain)
-        {
-            conOptn = new ConnectionOptions();
-            conOptn.Username = Machine.Username;
-            conOptn.Password = Machine.Password;
-            return conOptn;
-        }
-        private ErrorCode Connect(ConnectionOptions credential, string ip)
-        {
-
-            return ErrorCode.Ok;
-        }
-
-        private void GetRemoteSystemInfo(ManagementScope wmScope)
-        {
-            try
-            {
-                BasicInfo = getDataSource(wmScope, "Win32_OperatingSystem");
-                HardwareInfo = getDataSource(wmScope, "Win32_Processor");
-                ProgramInstalled = getDataSource(wmScope, string.Empty);
+                else if (result == ErrorCode.RPCUnavailable)
+                {
+                    MessageBox.Show(string.Format("Failed to connect remote host.\n\nSuggestions :\n-Make sure firewall is off\n-Allow app or feature through windows firewall.\n-Enable Domain Privilege for Windows Management Instrumentation(WMI)"));
+                }
+                else if (result == ErrorCode.NonWindows)
+                {
+                    MessageBox.Show(string.Format("{0} is not based on windows os.", Machine.IP));
+                }
+                else
+                {
+                    MessageBox.Show(string.Format("Failed to get remote system information for {0}", Machine.IP));
+                }
+                //Call GetRemoteSystemInfo with response with 
             }
             catch (Exception ex)
             {
@@ -134,54 +55,30 @@ namespace Network_Info_Win
             updateBehaviour("RESET");
         }
 
-        private DataTable getDataSource(ManagementScope scope,string winClassName)
+        /// <summary>
+        /// Remote system information 
+        /// </summary>
+        /// <param name="wmScope"></param>
+        private void GetRemoteSystemInfo(ManagementScope wmScope)
         {
-            DataTable temp = new DataTable();
-            temp.Columns.Add("PROPERTY_NAME");
-            temp.Columns.Add("PROPERTY_VALUE");
             try
             {
-                Ensure.ArgumentNotNull(scope, "ManagementScope");
-                Ensure.ArgumentNotNullOrEmptyString(winClassName, "Win32Class");
+                BasicInfo = Machine.getDataSource(wmScope, "Win32_OperatingSystem");
+                HardwareInfo = Machine.getDataSource(wmScope, "Win32_Processor");
+                ProgramInstalled = Machine.getDataSource(wmScope, string.Empty);
             }
             catch (Exception ex)
             {
-                return temp;
+                MessageBox.Show(ex.Message.ToString());
             }
-            
-            ManagementPath wmPath = new ManagementPath(winClassName);
-            ManagementClass mngmntClass = new ManagementClass(scope, wmPath, new ObjectGetOptions());
-
-            PropertyDataCollection propColletion = mngmntClass.Properties;
-
-            bool stopExecution = false;
-            foreach (ManagementObject mngmntObj in mngmntClass.GetInstances())
-            {
-                foreach (PropertyData property in propColletion)
-                {
-                    try
-                    {
-                        if (!string.IsNullOrEmpty(mngmntObj.Properties[property.Name].Value.ToString()))
-                        {
-                            DataRow dr = temp.NewRow();
-                            dr["PROPERTY_NAME"] = property.Name;
-                            dr["PROPERTY_VALUE"] = mngmntObj.Properties[property.Name].Value.ToString();
-                            temp.Rows.Add(dr);
-                        }
-                    }
-                    catch
-                    {
-                        stopExecution = true;
-                    }
-                }
-                if (stopExecution)
-                {
-                    break;
-                }
-            }
-            return temp;
-
         }
+
+        
+        
+        /// <summary>
+        /// Manage UI behaviour for button actions
+        /// </summary>
+        /// <param name="currAction"></param>
         private void updateBehaviour(string currAction)
         {
             switch (currAction.ToUpper())

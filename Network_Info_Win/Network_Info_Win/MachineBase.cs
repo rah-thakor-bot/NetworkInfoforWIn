@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Configuration;
 using System.Diagnostics;
+using System.Management;
+using System.DirectoryServices.ActiveDirectory;
+using System.Data;
+using libExtension;
+using Microsoft.Win32;
 
 namespace Network_Info_Win
 {
@@ -8,93 +13,59 @@ namespace Network_Info_Win
     internal class MachineBase
     {
         string _username, _password, _ip, _domainname;
-
-        public readonly string[] DomainList = new string[] { "AUROSURAT", "AUROMFG" };
+        ConnectionOptions conOptn;
+        public ManagementScope scope;
+        public readonly string[] DomainList = new string[] { "AUROSURAT" };
 
         public string Username
         {
             get
             {
-                return this._username;
+                return _username;
             }
             set
             {
-                this._username = value;
+                _username = value;
             }
         }
         public string Password
         {
             get
             {
-                return this._password;
+                return _password;
             }
             set
             {
-                this._password = value;
+                _password = value;
             }
         }
         public string IP
         {
             get
             {
-                return this._ip;
+                return _ip;
             }
             set
             {
-                this._ip = value;
+                _ip = value;
             }
         }
         public string DomainName
         {
             get
             {
-                return this._domainname;
+                return _domainname;
             }
             set
             {
-                this._domainname = value;
-                if (_domainname.ToUpper() == "AUROMFG")
-                {
-                    _username = MfgUsername();
-                    _password = MfgPwd();
-                }
-                else if (_domainname.ToUpper() == "AUROSURAT")
-                {
-                    _username = SuratUserName();
-                    _password = SuratPwd();
-                }
+                _domainname = value;
             }
         }
 
         public MachineBase()
         {
-            Username = MfgUsername();
-            Password = MfgPwd();
-            DomainList = null;
-        }
-
-        public void ChangeDomain(string domainName)
-        {
-            if (domainName.ToUpper() == "AUROMFG")
-            {
-                _username = MfgUsername();
-                _password = MfgPwd();
-            }
-            else if (domainName.ToUpper() == "AUROSURAT")
-            {
-                _username = SuratUserName();
-                _password = SuratPwd();
-            }
-        }
-
-        private string MfgUsername()
-        {
-            return ConfigurationManager.AppSettings["AuroMfgUsername"].ToString();
-        }
-
-        private string MfgPwd()
-        {
-            return ConfigurationManager.AppSettings["AuroMfgPwd"].ToString();
+            Username = SuratUserName();
+            Password = SuratPwd();
         }
 
         private string SuratUserName()
@@ -107,5 +78,146 @@ namespace Network_Info_Win
             return ConfigurationManager.AppSettings["AuroSuratPwd"].ToString();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public ErrorCode ConnectRemoteMachine()
+        {
+            if (GetOsVersion(IP) == OSVersion.Windows)
+            {
+                return Connect(GetConnectionOptions(DomainName));
+            }
+            return ErrorCode.NonWindows;
+        }
+
+        /// <summary>
+        /// Check for OS version
+        /// </summary>
+        /// <param name="ipAddress"></param>
+        /// <returns></returns>
+        private OSVersion GetOsVersion(string ipAddress)
+        {
+            try
+            {
+                using (var reg = RegistryKey.OpenRemoteBaseKey(RegistryHive.LocalMachine, ipAddress))
+                using (var key = reg.OpenSubKey(@"Software\Microsoft\Windows NT\CurrentVersion\"))
+                {
+                    return OSVersion.Windows;
+                }
+            }
+            catch (Exception)
+            {
+                return OSVersion.NonWindows;
+            }
+            
+        }
+
+        /// <summary>
+        /// Get credential of administrator role user
+        /// </summary>
+        /// <param name="domain">Domain name</param>
+        /// <returns></returns>
+        private ConnectionOptions GetConnectionOptions(string domain)
+        {
+            conOptn = new ConnectionOptions();
+            conOptn.Username = Username;
+            conOptn.Password = Password;
+            return conOptn;
+        }
+
+        /// <summary>
+        /// Current domain name on which current user is logged on
+        /// </summary>
+        private void getDomainList()
+        {
+            using (var forest = Forest.GetCurrentForest())
+            {
+                int cnt = 0;
+                foreach (Domain domain in forest.Domains)
+                {
+                    //Machine.DomainList[cnt] = domain.Name;
+                    cnt++;
+                    //domain.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Connect with remote host with ip and credential details
+        /// </summary>
+        /// <param name="credential"></param>
+        /// <param name="ip"></param>
+        /// <returns></returns>
+        private ErrorCode Connect(ConnectionOptions credential)
+        {
+            scope = new ManagementScope(string.Format("\\\\{0}\\root\\cimv2", IP), credential);
+            try
+            {
+                scope.Connect();
+            }
+            catch (System.Runtime.InteropServices.COMException)
+            {
+                return ErrorCode.RPCUnavailable;
+            }
+            catch (Exception)
+            {
+                return ErrorCode.Error;
+            }
+            return ErrorCode.Ok;
+        }
+
+        /// <summary>
+        /// Get win32_* classes details for given scope and class name
+        /// </summary>
+        /// <param name="scope"></param>
+        /// <param name="winClassName"></param>
+        /// <returns></returns>
+        public DataTable getDataSource(ManagementScope scope, string winClassName)
+        {
+            DataTable temp = new DataTable();
+            temp.Columns.Add("PROPERTY_NAME");
+            temp.Columns.Add("PROPERTY_VALUE");
+            try
+            {
+                Ensure.ArgumentNotNull(scope, "ManagementScope");
+                Ensure.ArgumentNotNullOrEmptyString(winClassName, "Win32Class");
+            }
+            catch (Exception)
+            {
+                return temp;
+            }
+
+            ManagementPath wmPath = new ManagementPath(winClassName);
+            ManagementClass mngmntClass = new ManagementClass(scope, wmPath, new ObjectGetOptions());
+
+            PropertyDataCollection propColletion = mngmntClass.Properties;
+
+            bool stopExecution = false;
+            foreach (ManagementObject mngmntObj in mngmntClass.GetInstances())
+            {
+                foreach (PropertyData property in propColletion)
+                {
+                    try
+                    {
+                        if (!string.IsNullOrEmpty(mngmntObj.Properties[property.Name].Value.ToString()))
+                        {
+                            DataRow dr = temp.NewRow();
+                            dr["PROPERTY_NAME"] = property.Name;
+                            dr["PROPERTY_VALUE"] = mngmntObj.Properties[property.Name].Value.ToString();
+                            temp.Rows.Add(dr);
+                        }
+                    }
+                    catch
+                    {
+                        stopExecution = true;
+                    }
+                }
+                if (stopExecution)
+                {
+                    break;
+                }
+            }
+            return temp;
+        }
     }
 }
