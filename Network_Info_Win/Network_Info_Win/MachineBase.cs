@@ -9,7 +9,7 @@ using Microsoft.Win32;
 
 namespace Network_Info_Win
 {
-    //[DebuggerStepThrough]
+    [DebuggerStepThrough]
     internal class MachineBase
     {
         string _username, _password, _ip, _domainname;
