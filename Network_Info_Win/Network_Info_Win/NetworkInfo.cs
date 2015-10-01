@@ -22,7 +22,6 @@ namespace Network_Info_Win
             {
                 Ensure.ArgumentNotNullOrEmptyString(txtIP.Text, "IP Address");
                 Machine = new MachineBase();
-                //getDomainList();
                 Machine.IP = txtIP.Text;
                 ErrorCode result = Machine.ConnectRemoteMachine();
                 if (result == ErrorCode.Ok)
@@ -42,7 +41,6 @@ namespace Network_Info_Win
                 {
                     MessageBox.Show(string.Format("Failed to get remote system information for {0}", Machine.IP));
                 }
-                //Call GetRemoteSystemInfo with response with 
             }
             catch (Exception ex)
             {
@@ -73,8 +71,6 @@ namespace Network_Info_Win
             }
         }
 
-        
-        
         /// <summary>
         /// Manage UI behaviour for button actions
         /// </summary>
