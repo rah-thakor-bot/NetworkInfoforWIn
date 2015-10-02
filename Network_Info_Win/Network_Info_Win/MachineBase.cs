@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Diagnostics;
 using System.Management;
 using System.DirectoryServices.ActiveDirectory;
