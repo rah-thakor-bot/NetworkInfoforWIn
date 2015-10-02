@@ -28,12 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.grpNetworkInfo = new System.Windows.Forms.GroupBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btnChangeCredential = new System.Windows.Forms.Button();
+            this.panelCredential = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.lblUserValidatingStr = new System.Windows.Forms.Label();
+            this.btnSaveCredential = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lblUserName = new System.Windows.Forms.Label();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.txtUsername = new System.Windows.Forms.TextBox();
             this.lblIP = new System.Windows.Forms.Label();
             this.txtIP = new System.Windows.Forms.TextBox();
             this.btn_Reset = new System.Windows.Forms.Button();
@@ -46,20 +55,12 @@
             this.grdHardware = new System.Windows.Forms.DataGridView();
             this.grpPrograms = new System.Windows.Forms.GroupBox();
             this.grdPrograms = new System.Windows.Forms.DataGridView();
-            this.panelCredential = new System.Windows.Forms.Panel();
-            this.txtUsername = new System.Windows.Forms.TextBox();
-            this.txtPassword = new System.Windows.Forms.TextBox();
-            this.lblUserName = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.btnCredential = new System.Windows.Forms.Button();
-            this.lblUserValidatingStr = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.btnChangeCredential = new System.Windows.Forms.Button();
             this.grpNetworkInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.panelCredential.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -74,7 +75,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.grdHardware)).BeginInit();
             this.grpPrograms.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdPrograms)).BeginInit();
-            this.panelCredential.SuspendLayout();
             this.SuspendLayout();
             // 
             // grpNetworkInfo
@@ -110,6 +110,104 @@
             this.splitContainer1.Size = new System.Drawing.Size(836, 713);
             this.splitContainer1.SplitterDistance = 140;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // btnChangeCredential
+            // 
+            this.btnChangeCredential.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnChangeCredential.Location = new System.Drawing.Point(108, 90);
+            this.btnChangeCredential.Name = "btnChangeCredential";
+            this.btnChangeCredential.Size = new System.Drawing.Size(197, 23);
+            this.btnChangeCredential.TabIndex = 11;
+            this.btnChangeCredential.Text = "Click here to change credential";
+            this.btnChangeCredential.UseVisualStyleBackColor = true;
+            this.btnChangeCredential.Click += new System.EventHandler(this.btnChangeCredential_Click);
+            // 
+            // panelCredential
+            // 
+            this.panelCredential.Controls.Add(this.button1);
+            this.panelCredential.Controls.Add(this.lblUserValidatingStr);
+            this.panelCredential.Controls.Add(this.btnSaveCredential);
+            this.panelCredential.Controls.Add(this.label2);
+            this.panelCredential.Controls.Add(this.lblUserName);
+            this.panelCredential.Controls.Add(this.txtPassword);
+            this.panelCredential.Controls.Add(this.txtUsername);
+            this.panelCredential.Location = new System.Drawing.Point(331, 11);
+            this.panelCredential.Name = "panelCredential";
+            this.panelCredential.Size = new System.Drawing.Size(317, 126);
+            this.panelCredential.TabIndex = 10;
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(239, 88);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "Cancel";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // lblUserValidatingStr
+            // 
+            this.lblUserValidatingStr.AutoSize = true;
+            this.lblUserValidatingStr.BackColor = System.Drawing.Color.OrangeRed;
+            this.lblUserValidatingStr.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserValidatingStr.ForeColor = System.Drawing.Color.Snow;
+            this.lblUserValidatingStr.Location = new System.Drawing.Point(104, 35);
+            this.lblUserValidatingStr.Name = "lblUserValidatingStr";
+            this.lblUserValidatingStr.Size = new System.Drawing.Size(110, 15);
+            this.lblUserValidatingStr.TabIndex = 5;
+            this.lblUserValidatingStr.Text = "*domain\\username";
+            // 
+            // btnSaveCredential
+            // 
+            this.btnSaveCredential.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSaveCredential.Location = new System.Drawing.Point(101, 88);
+            this.btnSaveCredential.Name = "btnSaveCredential";
+            this.btnSaveCredential.Size = new System.Drawing.Size(125, 23);
+            this.btnSaveCredential.TabIndex = 4;
+            this.btnSaveCredential.Text = "Save Credential";
+            this.btnSaveCredential.UseVisualStyleBackColor = true;
+            this.btnSaveCredential.Click += new System.EventHandler(this.btnCredential_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(31, 57);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(57, 15);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Password";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblUserName
+            // 
+            this.lblUserName.AutoSize = true;
+            this.lblUserName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUserName.Location = new System.Drawing.Point(31, 17);
+            this.lblUserName.Name = "lblUserName";
+            this.lblUserName.Size = new System.Drawing.Size(60, 15);
+            this.lblUserName.TabIndex = 2;
+            this.lblUserName.Text = "Username";
+            this.lblUserName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // txtPassword
+            // 
+            this.txtPassword.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPassword.Location = new System.Drawing.Point(101, 54);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '*';
+            this.txtPassword.Size = new System.Drawing.Size(213, 23);
+            this.txtPassword.TabIndex = 1;
+            // 
+            // txtUsername
+            // 
+            this.txtUsername.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtUsername.Location = new System.Drawing.Point(101, 10);
+            this.txtUsername.Name = "txtUsername";
+            this.txtUsername.Size = new System.Drawing.Size(213, 23);
+            this.txtUsername.TabIndex = 0;
             // 
             // lblIP
             // 
@@ -205,14 +303,14 @@
             this.grdBasicInfo.BackgroundColor = System.Drawing.Color.Snow;
             this.grdBasicInfo.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Sunken;
             this.grdBasicInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Info;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.grdBasicInfo.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Info;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.grdBasicInfo.DefaultCellStyle = dataGridViewCellStyle5;
             this.grdBasicInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdBasicInfo.GridColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.grdBasicInfo.Location = new System.Drawing.Point(3, 19);
@@ -221,11 +319,11 @@
             this.grdBasicInfo.ReadOnly = true;
             this.grdBasicInfo.RowHeadersVisible = false;
             this.grdBasicInfo.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.MistyRose;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.OrangeRed;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Snow;
-            this.grdBasicInfo.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.MistyRose;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.OrangeRed;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Snow;
+            this.grdBasicInfo.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.grdBasicInfo.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             this.grdBasicInfo.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grdBasicInfo.RowTemplate.ReadOnly = true;
@@ -259,11 +357,11 @@
             this.grdHardware.ReadOnly = true;
             this.grdHardware.RowHeadersVisible = false;
             this.grdHardware.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.MistyRose;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.OrangeRed;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Snow;
-            this.grdHardware.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.MistyRose;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.OrangeRed;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Snow;
+            this.grdHardware.RowsDefaultCellStyle = dataGridViewCellStyle7;
             this.grdHardware.RowTemplate.ReadOnly = true;
             this.grdHardware.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdHardware.Size = new System.Drawing.Size(472, 279);
@@ -294,111 +392,15 @@
             this.grdPrograms.ReadOnly = true;
             this.grdPrograms.RowHeadersVisible = false;
             this.grdPrograms.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.MistyRose;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.OrangeRed;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Snow;
-            this.grdPrograms.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.MistyRose;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.OrangeRed;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Snow;
+            this.grdPrograms.RowsDefaultCellStyle = dataGridViewCellStyle8;
             this.grdPrograms.RowTemplate.ReadOnly = true;
             this.grdPrograms.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdPrograms.Size = new System.Drawing.Size(348, 547);
             this.grdPrograms.TabIndex = 0;
-            // 
-            // panelCredential
-            // 
-            this.panelCredential.Controls.Add(this.button1);
-            this.panelCredential.Controls.Add(this.lblUserValidatingStr);
-            this.panelCredential.Controls.Add(this.btnCredential);
-            this.panelCredential.Controls.Add(this.label2);
-            this.panelCredential.Controls.Add(this.lblUserName);
-            this.panelCredential.Controls.Add(this.txtPassword);
-            this.panelCredential.Controls.Add(this.txtUsername);
-            this.panelCredential.Location = new System.Drawing.Point(331, 11);
-            this.panelCredential.Name = "panelCredential";
-            this.panelCredential.Size = new System.Drawing.Size(317, 126);
-            this.panelCredential.TabIndex = 10;
-            // 
-            // txtUsername
-            // 
-            this.txtUsername.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtUsername.Location = new System.Drawing.Point(101, 10);
-            this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(213, 23);
-            this.txtUsername.TabIndex = 0;
-            // 
-            // txtPassword
-            // 
-            this.txtPassword.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPassword.Location = new System.Drawing.Point(101, 54);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(213, 23);
-            this.txtPassword.TabIndex = 1;
-            // 
-            // lblUserName
-            // 
-            this.lblUserName.AutoSize = true;
-            this.lblUserName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUserName.Location = new System.Drawing.Point(13, 17);
-            this.lblUserName.Name = "lblUserName";
-            this.lblUserName.Size = new System.Drawing.Size(60, 15);
-            this.lblUserName.TabIndex = 2;
-            this.lblUserName.Text = "Username";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(13, 57);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 15);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Password";
-            // 
-            // btnCredential
-            // 
-            this.btnCredential.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCredential.Location = new System.Drawing.Point(101, 88);
-            this.btnCredential.Name = "btnCredential";
-            this.btnCredential.Size = new System.Drawing.Size(125, 23);
-            this.btnCredential.TabIndex = 4;
-            this.btnCredential.Text = "Save Credential";
-            this.btnCredential.UseVisualStyleBackColor = true;
-            this.btnCredential.Click += new System.EventHandler(this.btnCredential_Click);
-            // 
-            // lblUserValidatingStr
-            // 
-            this.lblUserValidatingStr.AutoSize = true;
-            this.lblUserValidatingStr.BackColor = System.Drawing.Color.OrangeRed;
-            this.lblUserValidatingStr.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUserValidatingStr.ForeColor = System.Drawing.Color.Snow;
-            this.lblUserValidatingStr.Location = new System.Drawing.Point(104, 35);
-            this.lblUserValidatingStr.Name = "lblUserValidatingStr";
-            this.lblUserValidatingStr.Size = new System.Drawing.Size(110, 15);
-            this.lblUserValidatingStr.TabIndex = 5;
-            this.lblUserValidatingStr.Text = "*domain\\username";
-            // 
-            // button1
-            // 
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(239, 88);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Cancel";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // btnChangeCredential
-            // 
-            this.btnChangeCredential.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnChangeCredential.Location = new System.Drawing.Point(108, 90);
-            this.btnChangeCredential.Name = "btnChangeCredential";
-            this.btnChangeCredential.Size = new System.Drawing.Size(197, 23);
-            this.btnChangeCredential.TabIndex = 11;
-            this.btnChangeCredential.Text = "Click here to change credential";
-            this.btnChangeCredential.UseVisualStyleBackColor = true;
-            this.btnChangeCredential.Click += new System.EventHandler(this.btnChangeCredential_Click);
             // 
             // NetworkInfo
             // 
@@ -416,6 +418,8 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.panelCredential.ResumeLayout(false);
+            this.panelCredential.PerformLayout();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -430,8 +434,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.grdHardware)).EndInit();
             this.grpPrograms.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdPrograms)).EndInit();
-            this.panelCredential.ResumeLayout(false);
-            this.panelCredential.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -457,7 +459,7 @@
         private System.Windows.Forms.Label lblUserName;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.TextBox txtUsername;
-        private System.Windows.Forms.Button btnCredential;
+        private System.Windows.Forms.Button btnSaveCredential;
         private System.Windows.Forms.Label lblUserValidatingStr;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnChangeCredential;

@@ -20,8 +20,22 @@ namespace Network_Info_Win
 
         private void btnGetData_Click(object sender, EventArgs e)
         {
+            DialogResult res;
             try
             {
+                try
+                {
+                    Ensure.ArgumentNotNullOrEmptyString(Machine.Username, "Username");
+                }
+                catch (Exception)
+                {
+                    res = MessageBox.Show("No Credential found.\nEnter Crendential", "Confirmation", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
+                    {
+                        updateBehaviour("SHOWCREDENTIAL");
+                    }
+                    return;
+                }
                 Ensure.ArgumentNotNullOrEmptyString(txtIP.Text, "IP Address");
                 Machine.IP = txtIP.Text;
                 ErrorCode result = Machine.ConnectRemoteMachine();
@@ -31,7 +45,13 @@ namespace Network_Info_Win
                 }
                 else if (result == ErrorCode.Auth)
                 {
-                    MessageBox.Show(string.Format("Can't connect with current credential"));
+                    res = MessageBox.Show(string.Format("Can't connect with current credential.\nWould you like to change credential?"), "Credential", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
+                    {
+                        updateBehaviour("SHOWCREDENTIAL");
+                    }
+                    return;
+
                 }
                 else if (result == ErrorCode.RPCUnavailable)
                 {
@@ -106,7 +126,6 @@ namespace Network_Info_Win
 
         private void btnChangeCredential_Click(object sender, EventArgs e)
         {
-            Machine.SetDefaultCredential();
             updateBehaviour("SHOWCREDENTIAL");
         }
 

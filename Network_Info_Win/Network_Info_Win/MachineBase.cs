@@ -13,7 +13,10 @@ namespace Network_Info_Win
     [DebuggerStepThrough]
     internal class MachineBase
     {
-        private string _username, _password, _ip, _domainname;
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private string _password;
+
+        private string _username, _ip, _domainname;
         ConnectionOptions conOptn;
         public ManagementScope scope;
 
@@ -28,6 +31,8 @@ namespace Network_Info_Win
                 _username = value;
             }
         }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public string Password
         {
             get
@@ -64,35 +69,31 @@ namespace Network_Info_Win
         }
 
         /// <summary>
-        /// Initialize constructor with username and password
+        /// Initialize empty constructor
         /// </summary>
         public MachineBase()
         {
-            SetCredential();
+
+        }
+
+        /// <summary>
+        /// Initialize constructor with username and password
+        /// </summary>
+        public MachineBase(string userName,string password)
+        {
+            _username = userName;
+            _password = password;
         }
 
         /// <summary>
         /// Initialize constructor with username,password and ip
         /// </summary>
         /// <param name="ipAddress"></param>
-        public MachineBase(string ipAddress)
+        public MachineBase(string userName, string password,string ipAddress)
         {
+            _username = userName;
+            _password = password;
             _ip = ipAddress;
-            SetCredential();
-        }
-
-        public void SetDefaultCredential()
-        {
-            SetCredential();
-        }
-
-        /// <summary>
-        /// Set default credential
-        /// </summary>
-        private void SetCredential()
-        {
-            _username = ConfigurationManager.AppSettings["AuroSuratUsername"].ToString();
-            _password = ConfigurationManager.AppSettings["AuroSuratPwd"].ToString();
         }
 
         /// <summary>
