@@ -6,16 +6,16 @@ using System.DirectoryServices.ActiveDirectory;
 using System.Data;
 using libExtension;
 using Microsoft.Win32;
+using System.Runtime.InteropServices;
 
 namespace Network_Info_Win
 {
     [DebuggerStepThrough]
     internal class MachineBase
     {
-        string _username, _password, _ip, _domainname;
+        private string _username, _password, _ip, _domainname;
         ConnectionOptions conOptn;
         public ManagementScope scope;
-        public readonly string[] DomainList = new string[] { "AUROSURAT" };
 
         public string Username
         {
@@ -50,6 +50,7 @@ namespace Network_Info_Win
                 _ip = value;
             }
         }
+
         public string DomainName
         {
             get
@@ -62,20 +63,36 @@ namespace Network_Info_Win
             }
         }
 
+        /// <summary>
+        /// Initialize constructor with username and password
+        /// </summary>
         public MachineBase()
         {
-            Username = SuratUserName();
-            Password = SuratPwd();
+            SetCredential();
         }
 
-        private string SuratUserName()
+        /// <summary>
+        /// Initialize constructor with username,password and ip
+        /// </summary>
+        /// <param name="ipAddress"></param>
+        public MachineBase(string ipAddress)
         {
-            return ConfigurationManager.AppSettings["AuroSuratUsername"].ToString();
+            _ip = ipAddress;
+            SetCredential();
         }
 
-        private string SuratPwd()
+        public void SetDefaultCredential()
         {
-            return ConfigurationManager.AppSettings["AuroSuratPwd"].ToString();
+            SetCredential();
+        }
+
+        /// <summary>
+        /// Set default credential
+        /// </summary>
+        private void SetCredential()
+        {
+            _username = ConfigurationManager.AppSettings["AuroSuratUsername"].ToString();
+            _password = ConfigurationManager.AppSettings["AuroSuratPwd"].ToString();
         }
 
         /// <summary>
@@ -120,8 +137,8 @@ namespace Network_Info_Win
         private ConnectionOptions GetConnectionOptions(string domain)
         {
             conOptn = new ConnectionOptions();
-            conOptn.Username = Username;
-            conOptn.Password = Password;
+            conOptn.Username = _username;
+            conOptn.Password = _password;
             return conOptn;
         }
 
@@ -155,9 +172,13 @@ namespace Network_Info_Win
             {
                 scope.Connect();
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (COMException)
             {
                 return ErrorCode.RPCUnavailable;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return ErrorCode.Auth;
             }
             catch (Exception)
             {

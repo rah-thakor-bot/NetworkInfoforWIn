@@ -29,6 +29,6 @@ namespace Network_Info_Win
         /// <summary>
         /// Non windows OS
         /// </summary>
-        NonWindows = -6
+        NonWindows = -6,
     }
 }
